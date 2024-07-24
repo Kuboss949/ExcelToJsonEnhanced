@@ -15,6 +15,10 @@ namespace ExcelToJSON_eng
     {
         private string selectedFile;
         private const string ConfigFilePath = "config.txt";
+        private const string ConfigFilePath2 = "config2.txt";
+        private string start;
+        private string srodekTemplate;
+        private string koniec;
         public ExcelToJSONeng()
         {
             InitializeComponent();
@@ -29,6 +33,7 @@ namespace ExcelToJSON_eng
             cenaBox2.Text = cena2;
             cenaBox3.Text = cena3;
             textWALUTA.Text = waluta;
+            var (start, srodekTemplate, koniec) = ReadFromConfig2();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
@@ -57,9 +62,6 @@ namespace ExcelToJSON_eng
         {
             using (var package = new ExcelPackage(new FileInfo(excelFilePath)))
             {
-                const string start = "{\"ZakresWylaczenGrupKontrah\":0,\"SposLaczUmowyZRabat\":1,\"ZakresKontrah\":0,\"SposLaczPromZUmonNaCene\":0,\"Typ\":2,\"ZakresKarotek\":1,\"ZaleznaOd\":1,\"ListaKartotek\":[";
-                const string srodekTemplate = "{{\"CenaBrutto\":0,\"Waluta\":\"{3}\",\"OdIlosci\":{0},\"Procent\":0,\"Cena\":{1},\"Indeks\":\"{2}\"}},";
-                const string koniec = "],\"ListaGrupKart\":[],\"DataOd\":\"{1}\",\"DataDo\":\"\",\"OdIlosci\":0,\"ZakresMag\":0,\"ZakresDok\":0,\"ListaMag\":[],\"ListaDok\":[],\"SposLaczPromZUmonNaBonif\":0,\"ZakresWylaczenKontrah\":0,\"ListaCech\":[],\"Procent\":0,\"ZakresGrupKontrah\":1,\"Uwagi\":\" \",\"Parametr\":1,\"Opis\":\"{0}\",\"vast-oil\",\"ZakresGrupKart\":0,\"UmowaDla\":\"36\"}}";
                 string opis = textJSON.Text.ToString();
                 string waluta = textWALUTA.Text.ToString();
                 string tomorrowDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
@@ -117,13 +119,20 @@ namespace ExcelToJSON_eng
 
         private (string textFilePath, string index, string ilosc, string cena, string wiersz, string ilosc2, string ilosc3, string cena2, string cena3, string waluta) ReadFromConfig()
         {
-            string readedLine = ReadFromLine(2);
+            string readedLine = ReadFromLine(ConfigFilePath,2);
             var parts = readedLine.Split('|');
             if (parts.Length == 10)
             {
                 return (parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], parts[9]);
             }
             return (string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+        }
+        private (string start, string srodekTemplate, string koniec) ReadFromConfig2()
+        {
+            string start = ReadFromLine(ConfigFilePath2, 1);
+            string srodekTemplate = ReadFromLine(ConfigFilePath2, 2);
+            string koniec = ReadFromLine(ConfigFilePath2, 3);
+            return (start, srodekTemplate, koniec);
         }
         private void SaveToLine(int lineNumber, string data)
         {
@@ -142,11 +151,11 @@ namespace ExcelToJSON_eng
             System.IO.File.WriteAllLines(ConfigFilePath, lines);
         }
 
-        private string ReadFromLine(int lineNumber)
+        private string ReadFromLine(string filePath, int lineNumber)
         {
-            if (System.IO.File.Exists(ConfigFilePath))
+            if (System.IO.File.Exists(filePath))
             {
-                var lines = System.IO.File.ReadAllLines(ConfigFilePath);
+                var lines = System.IO.File.ReadAllLines(filePath);
                 if (lineNumber <= lines.Length)
                 {
                     return lines[lineNumber - 1];
@@ -154,6 +163,7 @@ namespace ExcelToJSON_eng
             }
             return string.Empty;
         }
+
         public int ConvertColumnLetterToNumber(string columnLetter)
         {
             int columnNumber = 0;

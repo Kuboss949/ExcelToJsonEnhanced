@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KsaweryAPP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+713cfeadc5ca4c2b458bd93c0d1fb10aa0047293")]
 [assembly: System.Reflection.AssemblyProductAttribute("KsaweryAPP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KsaweryAPP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

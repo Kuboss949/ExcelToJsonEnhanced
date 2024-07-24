@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\C#\\ExcelToJSON\\ExcelToJSON\\ExcelToJSON_eng\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0AD0F567-5C13-4412-A45E-874E51AC97B9}|ExcelToJSON_eng\\KsaweryAPP.csproj|e:\\c#\\exceltojson\\exceltojson\\exceltojson_eng\\exceltojson_eng\\exceltojsoneng.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0AD0F567-5C13-4412-A45E-874E51AC97B9}|ExcelToJSON_eng\\KsaweryAPP.csproj|solutionrelative:exceltojson_eng\\exceltojsoneng.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ExcelToJSONeng.cs",
+              "DocumentMoniker": "E:\\C#\\ExcelToJSON\\ExcelToJSON\\ExcelToJSON_eng\\ExcelToJSON_eng\\ExcelToJSONeng.cs",
+              "RelativeDocumentMoniker": "ExcelToJSON_eng\\ExcelToJSONeng.cs",
+              "ToolTip": "E:\\C#\\ExcelToJSON\\ExcelToJSON\\ExcelToJSON_eng\\ExcelToJSON_eng\\ExcelToJSONeng.cs",
+              "RelativeToolTip": "ExcelToJSON_eng\\ExcelToJSONeng.cs",
+              "ViewState": "AQIAACwAAAAAAAAAAAAMwKMAAAAgAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-24T18:43:33.594Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
