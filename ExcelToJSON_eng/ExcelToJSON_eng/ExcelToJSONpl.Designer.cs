@@ -28,163 +28,231 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.wierszBox = new System.Windows.Forms.TextBox();
-            this.Cena = new System.Windows.Forms.Label();
-            this.Ilość = new System.Windows.Forms.Label();
-            this.Index = new System.Windows.Forms.Label();
-            this.cenaBox = new System.Windows.Forms.TextBox();
-            this.iloscBox = new System.Windows.Forms.TextBox();
-            this.indexBox = new System.Windows.Forms.TextBox();
-            this.nazwaJSON = new System.Windows.Forms.Label();
-            this.textJSON = new System.Windows.Forms.TextBox();
-            this.BtnGenerateJSON = new System.Windows.Forms.Button();
-            this.File = new System.Windows.Forms.Label();
-            this.textFile = new System.Windows.Forms.TextBox();
-            this.BtnSelectFile = new System.Windows.Forms.Button();
-            this.SuspendLayout();
+            label1 = new System.Windows.Forms.Label();
+            wierszBox = new System.Windows.Forms.TextBox();
+            Cena = new System.Windows.Forms.Label();
+            Ilość = new System.Windows.Forms.Label();
+            Index = new System.Windows.Forms.Label();
+            cenaBox = new System.Windows.Forms.TextBox();
+            iloscBox = new System.Windows.Forms.TextBox();
+            indexBox = new System.Windows.Forms.TextBox();
+            nazwaJSON = new System.Windows.Forms.Label();
+            textJSON = new System.Windows.Forms.TextBox();
+            BtnGenerateJSON = new System.Windows.Forms.Button();
+            File = new System.Windows.Forms.Label();
+            textFile = new System.Windows.Forms.TextBox();
+            BtnSelectFile = new System.Windows.Forms.Button();
+            dataDo = new System.Windows.Forms.DateTimePicker();
+            label2 = new System.Windows.Forms.Label();
+            label3 = new System.Windows.Forms.Label();
+            dataOd = new System.Windows.Forms.DateTimePicker();
+            detal = new System.Windows.Forms.CheckBox();
+            SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(99, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 15);
-            this.label1.TabIndex = 27;
-            this.label1.Text = "Wiersz";
+            label1.AutoSize = true;
+            label1.Location = new System.Drawing.Point(113, 88);
+            label1.Name = "label1";
+            label1.Size = new System.Drawing.Size(53, 20);
+            label1.TabIndex = 27;
+            label1.Text = "Wiersz";
             // 
             // wierszBox
             // 
-            this.wierszBox.Location = new System.Drawing.Point(146, 63);
-            this.wierszBox.Name = "wierszBox";
-            this.wierszBox.Size = new System.Drawing.Size(100, 23);
-            this.wierszBox.TabIndex = 26;
+            wierszBox.Location = new System.Drawing.Point(167, 84);
+            wierszBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            wierszBox.Name = "wierszBox";
+            wierszBox.Size = new System.Drawing.Size(114, 27);
+            wierszBox.TabIndex = 26;
             // 
             // Cena
             // 
-            this.Cena.AutoSize = true;
-            this.Cena.Location = new System.Drawing.Point(635, 66);
-            this.Cena.Name = "Cena";
-            this.Cena.Size = new System.Drawing.Size(34, 15);
-            this.Cena.TabIndex = 25;
-            this.Cena.Text = "Cena";
+            Cena.AutoSize = true;
+            Cena.Location = new System.Drawing.Point(726, 88);
+            Cena.Name = "Cena";
+            Cena.Size = new System.Drawing.Size(42, 20);
+            Cena.TabIndex = 25;
+            Cena.Text = "Cena";
             // 
             // Ilość
             // 
-            this.Ilość.AutoSize = true;
-            this.Ilość.Location = new System.Drawing.Point(441, 66);
-            this.Ilość.Name = "Ilość";
-            this.Ilość.Size = new System.Drawing.Size(53, 15);
-            this.Ilość.TabIndex = 24;
-            this.Ilość.Text = "Od Ilosci";
+            Ilość.AutoSize = true;
+            Ilość.Location = new System.Drawing.Point(504, 88);
+            Ilość.Name = "Ilość";
+            Ilość.Size = new System.Drawing.Size(67, 20);
+            Ilość.TabIndex = 24;
+            Ilość.Text = "Od Ilosci";
             // 
             // Index
             // 
-            this.Index.AutoSize = true;
-            this.Index.Location = new System.Drawing.Point(266, 66);
-            this.Index.Name = "Index";
-            this.Index.Size = new System.Drawing.Size(41, 15);
-            this.Index.TabIndex = 23;
-            this.Index.Text = "Indeks";
+            Index.AutoSize = true;
+            Index.Location = new System.Drawing.Point(304, 88);
+            Index.Name = "Index";
+            Index.Size = new System.Drawing.Size(51, 20);
+            Index.TabIndex = 23;
+            Index.Text = "Indeks";
             // 
             // cenaBox
             // 
-            this.cenaBox.Location = new System.Drawing.Point(675, 63);
-            this.cenaBox.Name = "cenaBox";
-            this.cenaBox.Size = new System.Drawing.Size(100, 23);
-            this.cenaBox.TabIndex = 22;
+            cenaBox.Location = new System.Drawing.Point(771, 84);
+            cenaBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            cenaBox.Name = "cenaBox";
+            cenaBox.Size = new System.Drawing.Size(114, 27);
+            cenaBox.TabIndex = 22;
             // 
             // iloscBox
             // 
-            this.iloscBox.Location = new System.Drawing.Point(500, 63);
-            this.iloscBox.Name = "iloscBox";
-            this.iloscBox.Size = new System.Drawing.Size(100, 23);
-            this.iloscBox.TabIndex = 21;
+            iloscBox.Location = new System.Drawing.Point(571, 84);
+            iloscBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            iloscBox.Name = "iloscBox";
+            iloscBox.Size = new System.Drawing.Size(114, 27);
+            iloscBox.TabIndex = 21;
             // 
             // indexBox
             // 
-            this.indexBox.Location = new System.Drawing.Point(313, 63);
-            this.indexBox.Name = "indexBox";
-            this.indexBox.Size = new System.Drawing.Size(100, 23);
-            this.indexBox.TabIndex = 20;
+            indexBox.Location = new System.Drawing.Point(358, 84);
+            indexBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            indexBox.Name = "indexBox";
+            indexBox.Size = new System.Drawing.Size(114, 27);
+            indexBox.TabIndex = 20;
             // 
             // nazwaJSON
             // 
-            this.nazwaJSON.AutoSize = true;
-            this.nazwaJSON.Location = new System.Drawing.Point(12, 101);
-            this.nazwaJSON.Name = "nazwaJSON";
-            this.nazwaJSON.Size = new System.Drawing.Size(73, 15);
-            this.nazwaJSON.TabIndex = 19;
-            this.nazwaJSON.Text = "Nazwa JSON";
+            nazwaJSON.AutoSize = true;
+            nazwaJSON.Location = new System.Drawing.Point(14, 135);
+            nazwaJSON.Name = "nazwaJSON";
+            nazwaJSON.Size = new System.Drawing.Size(93, 20);
+            nazwaJSON.TabIndex = 19;
+            nazwaJSON.Text = "Nazwa JSON";
             // 
             // textJSON
             // 
-            this.textJSON.Location = new System.Drawing.Point(12, 119);
-            this.textJSON.Name = "textJSON";
-            this.textJSON.Size = new System.Drawing.Size(100, 23);
-            this.textJSON.TabIndex = 18;
+            textJSON.Location = new System.Drawing.Point(14, 159);
+            textJSON.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            textJSON.Name = "textJSON";
+            textJSON.Size = new System.Drawing.Size(114, 27);
+            textJSON.TabIndex = 18;
             // 
             // BtnGenerateJSON
             // 
-            this.BtnGenerateJSON.Location = new System.Drawing.Point(12, 148);
-            this.BtnGenerateJSON.Name = "BtnGenerateJSON";
-            this.BtnGenerateJSON.Size = new System.Drawing.Size(95, 23);
-            this.BtnGenerateJSON.TabIndex = 17;
-            this.BtnGenerateJSON.Text = "Generate JSON";
-            this.BtnGenerateJSON.UseVisualStyleBackColor = true;
-            this.BtnGenerateJSON.Click += new System.EventHandler(this.BtnGenerateJSON_Click);
+            BtnGenerateJSON.Location = new System.Drawing.Point(14, 197);
+            BtnGenerateJSON.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            BtnGenerateJSON.Name = "BtnGenerateJSON";
+            BtnGenerateJSON.Size = new System.Drawing.Size(109, 31);
+            BtnGenerateJSON.TabIndex = 17;
+            BtnGenerateJSON.Text = "Generate JSON";
+            BtnGenerateJSON.UseVisualStyleBackColor = true;
+            BtnGenerateJSON.Click += BtnGenerateJSON_Click;
             // 
             // File
             // 
-            this.File.AutoSize = true;
-            this.File.Location = new System.Drawing.Point(12, 15);
-            this.File.Name = "File";
-            this.File.Size = new System.Drawing.Size(25, 15);
-            this.File.TabIndex = 16;
-            this.File.Text = "File";
+            File.AutoSize = true;
+            File.Location = new System.Drawing.Point(14, 20);
+            File.Name = "File";
+            File.Size = new System.Drawing.Size(32, 20);
+            File.TabIndex = 16;
+            File.Text = "File";
             // 
             // textFile
             // 
-            this.textFile.Location = new System.Drawing.Point(12, 33);
-            this.textFile.Name = "textFile";
-            this.textFile.Size = new System.Drawing.Size(763, 23);
-            this.textFile.TabIndex = 15;
+            textFile.Location = new System.Drawing.Point(14, 44);
+            textFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            textFile.Name = "textFile";
+            textFile.Size = new System.Drawing.Size(871, 27);
+            textFile.TabIndex = 15;
             // 
             // BtnSelectFile
             // 
-            this.BtnSelectFile.Location = new System.Drawing.Point(12, 62);
-            this.BtnSelectFile.Name = "BtnSelectFile";
-            this.BtnSelectFile.Size = new System.Drawing.Size(75, 23);
-            this.BtnSelectFile.TabIndex = 14;
-            this.BtnSelectFile.Text = "Select File";
-            this.BtnSelectFile.UseVisualStyleBackColor = true;
-            this.BtnSelectFile.Click += new System.EventHandler(this.BtnSelectFile_Click);
+            BtnSelectFile.Location = new System.Drawing.Point(14, 83);
+            BtnSelectFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            BtnSelectFile.Name = "BtnSelectFile";
+            BtnSelectFile.Size = new System.Drawing.Size(86, 31);
+            BtnSelectFile.TabIndex = 14;
+            BtnSelectFile.Text = "Select File";
+            BtnSelectFile.UseVisualStyleBackColor = true;
+            BtnSelectFile.Click += BtnSelectFile_Click;
+            // 
+            // dataDo
+            // 
+            dataDo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            dataDo.Location = new System.Drawing.Point(388, 159);
+            dataDo.Name = "dataDo";
+            dataDo.Size = new System.Drawing.Size(130, 27);
+            dataDo.TabIndex = 29;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new System.Drawing.Point(208, 135);
+            label2.Name = "label2";
+            label2.Size = new System.Drawing.Size(63, 20);
+            label2.TabIndex = 30;
+            label2.Text = "Data od";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new System.Drawing.Point(388, 135);
+            label3.Name = "label3";
+            label3.Size = new System.Drawing.Size(63, 20);
+            label3.TabIndex = 31;
+            label3.Text = "Data do";
+            // 
+            // dataOd
+            // 
+            dataOd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            dataOd.Location = new System.Drawing.Point(208, 159);
+            dataOd.Name = "dataOd";
+            dataOd.Size = new System.Drawing.Size(130, 27);
+            dataOd.TabIndex = 32;
+            // 
+            // detal
+            // 
+            detal.Location = new System.Drawing.Point(555, 161);
+            detal.Name = "detal";
+            detal.Size = new System.Drawing.Size(104, 24);
+            detal.TabIndex = 33;
+            detal.Text = "Detal";
+            detal.UseVisualStyleBackColor = true;
             // 
             // ExcelToJSONpl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.wierszBox);
-            this.Controls.Add(this.Cena);
-            this.Controls.Add(this.Ilość);
-            this.Controls.Add(this.Index);
-            this.Controls.Add(this.cenaBox);
-            this.Controls.Add(this.iloscBox);
-            this.Controls.Add(this.indexBox);
-            this.Controls.Add(this.nazwaJSON);
-            this.Controls.Add(this.textJSON);
-            this.Controls.Add(this.BtnGenerateJSON);
-            this.Controls.Add(this.File);
-            this.Controls.Add(this.textFile);
-            this.Controls.Add(this.BtnSelectFile);
-            this.Name = "ExcelToJSONpl";
-            this.Text = "ExcelToJSONpl";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            ClientSize = new System.Drawing.Size(914, 600);
+            Controls.Add(detal);
+            Controls.Add(dataOd);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(dataDo);
+            Controls.Add(label1);
+            Controls.Add(wierszBox);
+            Controls.Add(Cena);
+            Controls.Add(Ilość);
+            Controls.Add(Index);
+            Controls.Add(cenaBox);
+            Controls.Add(iloscBox);
+            Controls.Add(indexBox);
+            Controls.Add(nazwaJSON);
+            Controls.Add(textJSON);
+            Controls.Add(BtnGenerateJSON);
+            Controls.Add(File);
+            Controls.Add(textFile);
+            Controls.Add(BtnSelectFile);
+            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            Text = "ExcelToJSONpl";
+            ResumeLayout(false);
+            PerformLayout();
         }
+
+        private System.Windows.Forms.CheckBox detal;
+
+        private System.Windows.Forms.DateTimePicker dataOd;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
+
+        private System.Windows.Forms.DateTimePicker dataDo;
 
         #endregion
 

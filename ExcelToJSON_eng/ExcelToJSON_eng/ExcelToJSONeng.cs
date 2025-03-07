@@ -33,7 +33,7 @@ namespace ExcelToJSON_eng
             cenaBox2.Text = cena2;
             cenaBox3.Text = cena3;
             textWALUTA.Text = waluta;
-            var (start, srodekTemplate, koniec) = ReadFromConfig2();
+            (start, srodekTemplate, koniec) = ReadFromConfig2();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
@@ -62,10 +62,10 @@ namespace ExcelToJSON_eng
         {
             using (var package = new ExcelPackage(new FileInfo(excelFilePath)))
             {
-                string opis = textJSON.Text.ToString();
-                string waluta = textWALUTA.Text.ToString();
+                string opis = textJSON.Text;
+                string waluta = textWALUTA.Text;
                 string tomorrowDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-                string stringKoniec = string.Format(koniec, opis, tomorrowDate);
+                string stringKoniec = string.Format(koniec, tomorrowDate, opis);
                 var worksheet = package.Workbook.Worksheets[0];
                 int rowCount = worksheet.Dimension.Rows;
                 List<RowData> rows = new List<RowData>();
@@ -101,7 +101,7 @@ namespace ExcelToJSON_eng
                 srodek = srodek.Substring(0, srodek.Length - 3);
                 string finalJson = start + Environment.NewLine + srodek + Environment.NewLine + stringKoniec;
                 System.IO.File.WriteAllText(jsonOutputPath, finalJson);
-                MessageBox.Show("Wyeksportowano pomyœlnie!", "Eksport", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Wyeksportowano pomyï¿½lnie!", "Eksport", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         public class RowData
@@ -131,7 +131,7 @@ namespace ExcelToJSON_eng
         {
             string start = ReadFromLine(ConfigFilePath2, 1);
             string srodekTemplate = ReadFromLine(ConfigFilePath2, 2);
-            string koniec = ReadFromLine(ConfigFilePath2, 3);
+            string koniec = ReadFromLine(ConfigFilePath2,  3);
             return (start, srodekTemplate, koniec);
         }
         private void SaveToLine(int lineNumber, string data)
@@ -177,19 +177,19 @@ namespace ExcelToJSON_eng
         {
             if (string.IsNullOrEmpty(textFile.Text))
             {
-                MessageBox.Show("Proszê wybraæ plik.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Proszï¿½ wybraï¿½ plik.", "Bï¿½ï¿½d", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (string.IsNullOrEmpty(textJSON.Text))
             {
-                MessageBox.Show("Proszê wpisaæ nazwê.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Proszï¿½ wpisaï¿½ nazwï¿½.", "Bï¿½ï¿½d", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
-            // Sprawdzanie, czy wierszBox, indexBox, cenaBox i iloscBox s¹ liczbami ca³kowitymi
+            // Sprawdzanie, czy wierszBox, indexBox, cenaBox i iloscBox sï¿½ liczbami caï¿½kowitymi
             if (!int.TryParse(wierszBox.Text, out _))
             {
-                MessageBox.Show("Nieprawid³owa wartoœæ w polu Wiersz. Proszê wpisaæ liczbê ca³kowit¹.", "B³¹d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Nieprawidï¿½owa wartoï¿½ï¿½ w polu Wiersz. Proszï¿½ wpisaï¿½ liczbï¿½ caï¿½kowitï¿½.", "Bï¿½ï¿½d", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             return true;
