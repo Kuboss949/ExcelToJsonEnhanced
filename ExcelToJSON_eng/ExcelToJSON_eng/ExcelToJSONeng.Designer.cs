@@ -33,8 +33,8 @@
             Cena = new System.Windows.Forms.Label();
             Ilość = new System.Windows.Forms.Label();
             Index = new System.Windows.Forms.Label();
-            cenaBox = new System.Windows.Forms.TextBox();
-            iloscBox = new System.Windows.Forms.TextBox();
+            cenaBox0 = new System.Windows.Forms.TextBox();
+            iloscBox0 = new System.Windows.Forms.TextBox();
             indexBox = new System.Windows.Forms.TextBox();
             nazwaJSON = new System.Windows.Forms.Label();
             textJSON = new System.Windows.Forms.TextBox();
@@ -42,18 +42,15 @@
             textFile = new System.Windows.Forms.TextBox();
             BtnSelectFile = new System.Windows.Forms.Button();
             File = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
-            label3 = new System.Windows.Forms.Label();
-            cenaBox2 = new System.Windows.Forms.TextBox();
-            iloscBox2 = new System.Windows.Forms.TextBox();
-            label5 = new System.Windows.Forms.Label();
-            label6 = new System.Windows.Forms.Label();
-            cenaBox3 = new System.Windows.Forms.TextBox();
-            iloscBox3 = new System.Windows.Forms.TextBox();
             textWALUTA = new System.Windows.Forms.TextBox();
             label4 = new System.Windows.Forms.Label();
             dataOd = new System.Windows.Forms.DateTimePicker();
             label7 = new System.Windows.Forms.Label();
+            boxPanel = new System.Windows.Forms.Panel();
+            addBox = new System.Windows.Forms.Button();
+            deleteBox = new System.Windows.Forms.Button();
+            templateBox = new System.Windows.Forms.TextBox();
+            boxPanel.SuspendLayout();
             SuspendLayout();
             // 
             // label1
@@ -76,7 +73,7 @@
             // Cena
             // 
             Cena.AutoSize = true;
-            Cena.Location = new System.Drawing.Point(726, 87);
+            Cena.Location = new System.Drawing.Point(712, 106);
             Cena.Name = "Cena";
             Cena.Size = new System.Drawing.Size(34, 15);
             Cena.TabIndex = 24;
@@ -85,7 +82,7 @@
             // Ilość
             // 
             Ilość.AutoSize = true;
-            Ilość.Location = new System.Drawing.Point(504, 87);
+            Ilość.Location = new System.Drawing.Point(565, 106);
             Ilość.Name = "Ilość";
             Ilość.Size = new System.Drawing.Size(53, 15);
             Ilość.TabIndex = 23;
@@ -102,19 +99,20 @@
             // 
             // cenaBox
             // 
-            cenaBox.Location = new System.Drawing.Point(771, 83);
-            cenaBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            cenaBox.Name = "cenaBox";
-            cenaBox.Size = new System.Drawing.Size(114, 23);
-            cenaBox.TabIndex = 21;
+            cenaBox0.Location = new System.Drawing.Point(141, 11);
+            cenaBox0.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            cenaBox0.Name = "cenaBox0";
+            cenaBox0.Size = new System.Drawing.Size(114, 23);
+            cenaBox0.TabIndex = 21;
+            cenaBox0.TextChanged += cenaBox_TextChanged;
             // 
             // iloscBox
             // 
-            iloscBox.Location = new System.Drawing.Point(571, 83);
-            iloscBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            iloscBox.Name = "iloscBox";
-            iloscBox.Size = new System.Drawing.Size(114, 23);
-            iloscBox.TabIndex = 20;
+            iloscBox0.Location = new System.Drawing.Point(3, 11);
+            iloscBox0.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            iloscBox0.Name = "iloscBox0";
+            iloscBox0.Size = new System.Drawing.Size(114, 23);
+            iloscBox0.TabIndex = 20;
             // 
             // indexBox
             // 
@@ -180,74 +178,6 @@
             File.TabIndex = 27;
             File.Text = "File";
             // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(726, 161);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(34, 15);
-            label2.TabIndex = 33;
-            label2.Text = "Cena";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(504, 161);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(53, 15);
-            label3.TabIndex = 32;
-            label3.Text = "Od Ilosci";
-            // 
-            // cenaBox2
-            // 
-            cenaBox2.Location = new System.Drawing.Point(771, 157);
-            cenaBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            cenaBox2.Name = "cenaBox2";
-            cenaBox2.Size = new System.Drawing.Size(114, 23);
-            cenaBox2.TabIndex = 30;
-            // 
-            // iloscBox2
-            // 
-            iloscBox2.Location = new System.Drawing.Point(571, 157);
-            iloscBox2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            iloscBox2.Name = "iloscBox2";
-            iloscBox2.Size = new System.Drawing.Size(114, 23);
-            iloscBox2.TabIndex = 29;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new System.Drawing.Point(726, 236);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(34, 15);
-            label5.TabIndex = 39;
-            label5.Text = "Cena";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new System.Drawing.Point(504, 236);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(53, 15);
-            label6.TabIndex = 38;
-            label6.Text = "Od Ilosci";
-            // 
-            // cenaBox3
-            // 
-            cenaBox3.Location = new System.Drawing.Point(771, 232);
-            cenaBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            cenaBox3.Name = "cenaBox3";
-            cenaBox3.Size = new System.Drawing.Size(114, 23);
-            cenaBox3.TabIndex = 36;
-            // 
-            // iloscBox3
-            // 
-            iloscBox3.Location = new System.Drawing.Point(571, 232);
-            iloscBox3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            iloscBox3.Name = "iloscBox3";
-            iloscBox3.Size = new System.Drawing.Size(114, 23);
-            iloscBox3.TabIndex = 35;
-            // 
             // textWALUTA
             // 
             textWALUTA.Location = new System.Drawing.Point(157, 157);
@@ -282,31 +212,67 @@
             label7.TabIndex = 46;
             label7.Text = "Data od";
             // 
+            // boxPanel
+            // 
+            boxPanel.Controls.Add(iloscBox0);
+            boxPanel.Controls.Add(cenaBox0);
+            boxPanel.Location = new System.Drawing.Point(533, 133);
+            boxPanel.Name = "boxPanel";
+            boxPanel.Size = new System.Drawing.Size(258, 455);
+            boxPanel.TabIndex = 47;
+            // 
+            // addBox
+            // 
+            addBox.BackColor = System.Drawing.Color.LightGreen;
+            addBox.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            addBox.Location = new System.Drawing.Point(808, 133);
+            addBox.Name = "addBox";
+            addBox.Size = new System.Drawing.Size(38, 34);
+            addBox.TabIndex = 48;
+            addBox.Text = "+";
+            addBox.UseVisualStyleBackColor = false;
+            addBox.Click += addBox_Click;
+            // 
+            // deleteBox
+            // 
+            deleteBox.BackColor = System.Drawing.Color.LightCoral;
+            deleteBox.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            deleteBox.Location = new System.Drawing.Point(808, 173);
+            deleteBox.Name = "deleteBox";
+            deleteBox.Size = new System.Drawing.Size(38, 34);
+            deleteBox.TabIndex = 49;
+            deleteBox.Text = "-";
+            deleteBox.UseVisualStyleBackColor = false;
+            deleteBox.Click += deleteBox_Click;
+            // 
+            // templateBox
+            // 
+            templateBox.Location = new System.Drawing.Point(31, 542);
+            templateBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            templateBox.Name = "templateBox";
+            templateBox.Size = new System.Drawing.Size(114, 23);
+            templateBox.TabIndex = 50;
+            templateBox.Visible = false;
+            // 
             // ExcelToJSONeng
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(914, 600);
+            Controls.Add(templateBox);
+            Controls.Add(deleteBox);
+            Controls.Add(addBox);
+            Controls.Add(boxPanel);
             Controls.Add(label7);
             Controls.Add(dataOd);
             Controls.Add(label4);
             Controls.Add(textWALUTA);
-            Controls.Add(label5);
-            Controls.Add(label6);
-            Controls.Add(cenaBox3);
-            Controls.Add(iloscBox3);
-            Controls.Add(label2);
-            Controls.Add(label3);
-            Controls.Add(cenaBox2);
-            Controls.Add(iloscBox2);
             Controls.Add(File);
             Controls.Add(label1);
             Controls.Add(wierszBox);
             Controls.Add(Cena);
             Controls.Add(Ilość);
             Controls.Add(Index);
-            Controls.Add(cenaBox);
-            Controls.Add(iloscBox);
             Controls.Add(indexBox);
             Controls.Add(nazwaJSON);
             Controls.Add(textJSON);
@@ -315,9 +281,18 @@
             Controls.Add(BtnSelectFile);
             Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             Text = "Form1";
+            boxPanel.ResumeLayout(false);
+            boxPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
+
+        private System.Windows.Forms.TextBox templateBox;
+
+        private System.Windows.Forms.Button deleteBox;
+
+        private System.Windows.Forms.Panel boxPanel;
+        private System.Windows.Forms.Button addBox;
 
         private System.Windows.Forms.DateTimePicker dataOd;
         private System.Windows.Forms.Label label7;
@@ -326,11 +301,11 @@
 
         private Label label1;
         private TextBox wierszBox;
-        private Label Cena;
-        private Label Ilość;
+        private System.Windows.Forms.Label Cena;
+        private System.Windows.Forms.Label Ilość;
         private Label Index;
-        private TextBox cenaBox;
-        private TextBox iloscBox;
+        private System.Windows.Forms.TextBox cenaBox0;
+        private System.Windows.Forms.TextBox iloscBox0;
         private TextBox indexBox;
         private Label nazwaJSON;
         private TextBox textJSON;
@@ -338,14 +313,6 @@
         private TextBox textFile;
         private Button BtnSelectFile;
         private Label File;
-        private Label label2;
-        private Label label3;
-        private TextBox cenaBox2;
-        private TextBox iloscBox2;
-        private Label label5;
-        private Label label6;
-        private TextBox cenaBox3;
-        private TextBox iloscBox3;
         private TextBox textWALUTA;
         private Label label4;
     }

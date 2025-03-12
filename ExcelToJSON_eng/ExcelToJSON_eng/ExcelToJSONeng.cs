@@ -4,35 +4,34 @@ using System.IO;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using TextBox = System.Windows.Forms.TextBox;
 
 namespace ExcelToJSON_eng
 {
     public partial class ExcelToJSONeng : Form
     {
-        private string selectedFile;
         private const string ConfigFilePath = "config.txt";
         private const string ConfigFilePath2 = "config2.txt";
         private string start;
         private string srodekTemplate;
         private string koniec;
+        private Point[] firstBoxLocation;
+        private int boxCounter;
+        private const int boxMargin = 40;
+        
         public ExcelToJSONeng()
         {
             InitializeComponent();
-            var (textFilePath, index, ilosc, cena, wiersz, ilosc2, ilosc3, cena2, cena3, waluta) = ReadFromConfig();
-            textFile.Text = textFilePath;
-            indexBox.Text = index;
-            iloscBox.Text = ilosc;
-            cenaBox.Text = cena;
-            wierszBox.Text = wiersz;
-            iloscBox2.Text = ilosc2;
-            iloscBox3.Text = ilosc3;
-            cenaBox2.Text = cena2;
-            cenaBox3.Text = cena3;
-            textWALUTA.Text = waluta;
+            boxPanel.Controls.Add(iloscBox0);
+            boxPanel.Controls.Add(cenaBox0);
+            firstBoxLocation = new [] {iloscBox0.Location, cenaBox0.Location};
+            boxCounter = 1;
+            LoadFromConfig();
             (start, srodekTemplate, koniec) = ReadFromConfig2();
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
@@ -44,7 +43,6 @@ namespace ExcelToJSON_eng
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 textFile.Text = openFileDialog.FileName;
-                selectedFile = openFileDialog.FileName;
             }
         }
 
@@ -64,32 +62,20 @@ namespace ExcelToJSON_eng
             {
                 string opis = textJSON.Text;
                 string waluta = textWALUTA.Text;
-                string tomorrowDate = DateTime.Now.AddDays(1).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-                string stringKoniec = string.Format(koniec, tomorrowDate, opis);
-                var worksheet = package.Workbook.Worksheets[0];
-                int rowCount = worksheet.Dimension.Rows;
-                List<RowData> rows = new List<RowData>();
-
-                SaveToConfig(textFile.Text, indexBox.Text, iloscBox.Text, cenaBox.Text, wierszBox.Text, iloscBox2.Text, iloscBox3.Text, cenaBox2.Text, cenaBox3.Text, textWALUTA.Text);
-
-                //StringBuilder srodekBuilder = new StringBuilder();
-                System.Windows.Forms.TextBox[] iloscBoxes = { iloscBox, iloscBox2, iloscBox3 };
-                System.Windows.Forms.TextBox[] cenaBoxes = { cenaBox, cenaBox2, cenaBox3 };
-                for(int i = 0; i < 3; i++)
+                string dataOdStr = "";
+                DateTime parsedDate;
+                if (DateTime.TryParse(dataOd.Text, out parsedDate))
                 {
-                    for (int row = int.Parse(wierszBox.Text); row <= rowCount; row++)
-                    {
-                        string odIlosci = worksheet.Cells[row, ConvertColumnLetterToNumber(iloscBoxes[i].Text)].Text;
-                        odIlosci = odIlosci.Replace("\r\n", "").Replace("\n", "");
-                        string cena = worksheet.Cells[row, ConvertColumnLetterToNumber(cenaBoxes[i].Text)].Text.Replace(",", ".");
-                        string indeks = worksheet.Cells[row, ConvertColumnLetterToNumber(indexBox.Text)].Text;
-
-                        if (string.IsNullOrEmpty(odIlosci) || string.IsNullOrEmpty(cena) || string.IsNullOrEmpty(indeks)) continue;
-
-                        string srodekRow = string.Format(srodekTemplate, odIlosci, cena, indeks, waluta);
-                        rows.Add(new RowData { Indeks = indeks, OdIlosci = odIlosci, Cena = cena, FormattedRow = srodekRow });
-                    }
+                    dataOdStr = parsedDate.ToString("yyyy-MM-dd");
                 }
+                SaveToConfig(textFile.Text, indexBox.Text, wierszBox.Text, waluta);
+                koniec = "], \"ListaGrupKart\":[], \"DataOd\":\"{0}\",\"DataDo\":\"\",\"OdIlosci\":0,\"ZakresMag\":0,\"ZakresDok\":0," +
+                         "\"ListaMag\":[], \"ListaDok\":[], \"SposLaczPromZUmonNaBonif\":0,\"ZakresWylaczenKontrah\":0," +
+                         "\"ListaCech\":[], \"Procent\":0,\"ZakresGrupKontrah\":1,\"Uwagi\":\"\",\"Parametr\":1," +
+                         "\"Opis\":\"{1}\",\"ZakresGrupKart\":0,\"UmowaDla\":\"35\"}}";
+                string stringKoniec = string.Format(koniec, dataOdStr, opis);
+                var worksheet = package.Workbook.Worksheets[0];
+                List<RowData> rows = CreateRowList(worksheet, waluta);
                 rows = rows.OrderBy(r => r.OdIlosci).ToList();
 
                 StringBuilder srodekBuilder = new StringBuilder();
@@ -111,29 +97,59 @@ namespace ExcelToJSON_eng
             public string Cena { get; set; }
             public string FormattedRow { get; set; }
         }
-        private void SaveToConfig(string textFilePath, string index, string ilosc, string cena, string wiersz, string ilosc2, string ilosc3, string cena2, string cena3, string waluta)
+        
+        private void SaveToConfig(string textFilePath, string index, string wiersz, string waluta)
         {
-            string configData = $"{textFilePath}|{index}|{ilosc}|{cena}|{wiersz}|{ilosc2}|{ilosc3}|{cena2}|{cena3}|{waluta}";
+            string configData = $"{textFilePath}|{index}|{wiersz}|{waluta}|{boxCounter}";
+            boxPanel.Controls.OfType<TextBox>().OrderBy(c => c.Location.Y).ToList().ForEach(control =>
+            {
+                configData += $"|{control.Name}:{control.Text}";
+            });
             SaveToLine(2, configData);
         }
 
-        private (string textFilePath, string index, string ilosc, string cena, string wiersz, string ilosc2, string ilosc3, string cena2, string cena3, string waluta) ReadFromConfig()
+        private bool LoadFromConfig()
         {
             string readedLine = ReadFromLine(ConfigFilePath,2);
             var parts = readedLine.Split('|');
-            if (parts.Length == 10)
+            if (parts.Length < 5)
             {
-                return (parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7], parts[8], parts[9]);
+                return false;
             }
-            return (string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty);
+            textFile.Text = parts[0];
+            indexBox.Text = parts[1];
+            wierszBox.Text = parts[2];
+            textWALUTA.Text = parts[3];
+            
+            int counter = int.Parse(parts[4]);
+            for (int i = 0; i < counter - 1; i++)
+                AddInputBoxToPanel();
+            
+            boxPanel.Controls.OfType<TextBox>().ToList().ForEach(control =>
+            {
+                var boxName = control.Name;
+                foreach (var part in parts)
+                {
+                    var substrings = part.Split(':');
+                    if (substrings[0] == control.Name)
+                    {
+                        control.Text = substrings[1];
+                        break;
+                    }
+                }
+            });
+            return true;
         }
+        
         private (string start, string srodekTemplate, string koniec) ReadFromConfig2()
         {
             string start = ReadFromLine(ConfigFilePath2, 1);
             string srodekTemplate = ReadFromLine(ConfigFilePath2, 2);
+            srodekTemplate = "{{\"CenaBrutto\":0,\"Waluta\":\"{3}\",\"OdIlosci\":{0},\"Procent\":0,\"Cena\":{1},\"Indeks\":\"{2}\"}},";
             string koniec = ReadFromLine(ConfigFilePath2,  3);
             return (start, srodekTemplate, koniec);
         }
+        
         private void SaveToLine(int lineNumber, string data)
         {
             List<string> lines = new List<string>();
@@ -164,7 +180,7 @@ namespace ExcelToJSON_eng
             return string.Empty;
         }
 
-        public int ConvertColumnLetterToNumber(string columnLetter)
+        private int ConvertColumnLetterToNumber(string columnLetter)
         {
             int columnNumber = 0;
             foreach (char c in columnLetter.ToUpper())
@@ -177,22 +193,107 @@ namespace ExcelToJSON_eng
         {
             if (string.IsNullOrEmpty(textFile.Text))
             {
-                MessageBox.Show("Prosz� wybra� plik.", "B��d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Proszę wybrać plik.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
             if (string.IsNullOrEmpty(textJSON.Text))
             {
-                MessageBox.Show("Prosz� wpisa� nazw�.", "B��d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Proszę wpisać nazwę.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-
-            // Sprawdzanie, czy wierszBox, indexBox, cenaBox i iloscBox s� liczbami ca�kowitymi
+            
             if (!int.TryParse(wierszBox.Text, out _))
             {
-                MessageBox.Show("Nieprawid�owa warto�� w polu Wiersz. Prosz� wpisa� liczb� ca�kowit�.", "B��d", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Nieprawidłowa wartość w polu Wiersz. Proszę wpisać liczbę całkowitą.", "Błąd", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
+            
             return true;
+        }
+
+        private void cenaBox_TextChanged(object sender, EventArgs e)
+        {
+            //throw new System.NotImplementedException();
+        }
+
+        private void addBox_Click(object sender, EventArgs e)
+        {
+            AddInputBoxToPanel();
+        }
+
+        private void deleteBox_Click(object sender, EventArgs e)
+        {
+            DeleteInputBoxFromPanel();
+        }
+
+        private void AddInputBoxToPanel()
+        {
+            int margin = boxMargin * boxCounter;
+            TextBox newIloscBox = new TextBox();
+            newIloscBox.Name = "iloscBox" + boxCounter;
+            newIloscBox.Size = iloscBox0.Size;
+            newIloscBox.Location = new Point(firstBoxLocation[0].X, firstBoxLocation[0].Y + margin);
+            
+            TextBox newCenaBox = new TextBox();
+            newCenaBox.Name = "cenaBox" + boxCounter;
+            newCenaBox.Size = cenaBox0.Size;
+            newCenaBox.Location = new Point(firstBoxLocation[1].X, firstBoxLocation[1].Y + margin);
+            
+            boxPanel.Controls.Add(newIloscBox);
+            boxPanel.Controls.Add(newCenaBox);
+
+            boxCounter++;
+        }
+
+        private void DeleteInputBoxFromPanel()
+        {
+            if (boxCounter <= 1) return;
+            for (int i = 0; i < 2; i++)
+            {
+                var maxYControl = boxPanel.Controls
+                    .OfType<Control>()
+                    .OrderByDescending(c => c.Location.Y)
+                    .FirstOrDefault();
+                if (maxYControl != null)
+                {
+                    boxPanel.Controls.Remove(maxYControl);
+                }
+            }
+            boxCounter--;
+        }
+
+        private List<RowData> CreateRowList(ExcelWorksheet worksheet, string waluta)
+        {
+            int rowCount = worksheet.Dimension.Rows;
+            List<RowData> rows = new List<RowData>();
+            var iloscBoxes = boxPanel.Controls
+                .OfType<TextBox>()
+                .Where(c => c.Name.StartsWith("iloscBox"))
+                .ToArray();
+            var cenaBoxes = boxPanel.Controls
+                .OfType<TextBox>()
+                .Where(c => c.Name.StartsWith("cenaBox"))
+                .ToArray();
+            for (int i = 0; i < boxCounter; i++)
+            {
+                for (int row = int.Parse(wierszBox.Text); row <= rowCount; row++)
+                {
+                    string odIlosci = worksheet.Cells[row, ConvertColumnLetterToNumber(iloscBoxes[i].Text)].Text;
+                    odIlosci = odIlosci.Replace("\r\n", "").Replace("\n", "");
+                    string cena = worksheet.Cells[row, ConvertColumnLetterToNumber(cenaBoxes[i].Text)].Text
+                        .Replace(",", ".");
+                    string indeks = worksheet.Cells[row, ConvertColumnLetterToNumber(indexBox.Text)].Text;
+
+                    if (string.IsNullOrEmpty(odIlosci) || string.IsNullOrEmpty(cena) ||
+                        string.IsNullOrEmpty(indeks)) continue;
+
+                    string srodekRow = string.Format(srodekTemplate, odIlosci, cena, indeks, waluta);
+                    rows.Add(new RowData
+                        { Indeks = indeks, OdIlosci = odIlosci, Cena = cena, FormattedRow = srodekRow });
+                }
+            }
+
+            return rows;
         }
     }
 }

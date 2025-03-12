@@ -1,3 +1,3 @@
 {"ZakresWylaczenGrupKontrah":0,"SposLaczUmowyZRabat":1,"ZakresKontrah":0,"SposLaczPromZUmonNaCene":0,"Typ":2,"ZakresKarotek":1,"ZaleznaOd":1,"ListaKartotek":[
 {"CenaBrutto":0,"Waluta":"{3}","OdIlosci":{0},"Procent":0,"Cena":{1},"Indeks":"{2}"},
-], "ListaGrupKart":[], "DataOd":{0},"DataDo":"","OdIlosci":0,"ZakresMag":0,"ZakresDok":0,"ListaMag":[], "ListaDok":[], "SposLaczPromZUmonNaBonif":0,"ZakresWylaczenKontrah":0,"ListaCech":[], "Procent":0,"ZakresGrupKontrah":1,"Uwagi":"","Parametr":1,"Opis":{1},"ZakresGrupKart":0,"UmowaDla":"35"}
+], "ListaGrupKart":[], "DataOd":"{0}","DataDo":"","OdIlosci":0,"ZakresMag":0,"ZakresDok":0,"ListaMag":[], "ListaDok":[], "SposLaczPromZUmonNaBonif":0,"ZakresWylaczenKontrah":0,"ListaCech":[], "Procent":0,"ZakresGrupKontrah":1,"Uwagi":"","Parametr":1,"Opis":"{1}","ZakresGrupKart":0,"UmowaDla":"35"}
