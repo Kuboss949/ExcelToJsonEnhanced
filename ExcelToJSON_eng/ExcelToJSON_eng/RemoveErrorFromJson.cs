@@ -40,7 +40,7 @@ namespace KsaweryAPP
                 string htmlContent = File.ReadAllText(textHTML.Text);
 
                 // Użycie wyrażenia regularnego do znalezienia wszystkich wystąpień wzorca
-                string pattern = "\"Line\":\"Nie znaleziono kartoteki o indeksie (\\w+)\"";
+                string pattern = "\"Line\":\"Nie znaleziono kartoteki o indeksie ([^\"]+)\"";
                 Regex regex = new Regex(pattern);
                 MatchCollection matches = regex.Matches(htmlContent);
 

@@ -1,2 +1,2 @@
-C:\Users\jakublopata\Downloads\Kopia pliku biżuteria-promocja (1) (1).xlsx|a|b|c|2|03.03.2025|14.03.2025|True
+C:\Users\jakublopata\OneDrive - PRZEDSIĘBIORSTWO PSZCZELARSKIE TOMASZ ŁYSOŃ SP Z O O SPÓŁKA KOMANDYTOWA\Pulpit\promocje\pr.xlsx|a|b|h|2|16.06.2025|30.06.2025|False
 C:\Users\jakublopata\OneDrive - PRZEDSIĘBIORSTWO PSZCZELARSKIE TOMASZ ŁYSOŃ SP Z O O SPÓŁKA KOMANDYTOWA\Pulpit\testt.xlsx|a|2|PLN|2|iloscBox0:b|cenaBox0:c|iloscBox1:d|cenaBox1:e

@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "953WFllJJ5k=",
+  "dgSpecHash": "x8SS/ATsk6E=",
   "success": true,
   "projectFilePath": "C:\\Users\\jakublopata\\RiderProjects\\ExcelToJSON2\\ExcelToJSON_eng\\ExcelToJSON_eng\\KsaweryAPP.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jakublopata\\.nuget\\packages\\epplus\\6.2.10\\epplus.6.2.10.nupkg.sha512",
     "C:\\Users\\jakublopata\\.nuget\\packages\\epplus.interfaces\\6.1.1\\epplus.interfaces.6.1.1.nupkg.sha512",
     "C:\\Users\\jakublopata\\.nuget\\packages\\epplus.system.drawing\\6.1.1\\epplus.system.drawing.6.1.1.nupkg.sha512",
+    "C:\\Users\\jakublopata\\.nuget\\packages\\firebirdsql.data.firebirdclient\\10.3.3\\firebirdsql.data.firebirdclient.10.3.3.nupkg.sha512",
     "C:\\Users\\jakublopata\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "C:\\Users\\jakublopata\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\jakublopata\\.nuget\\packages\\microsoft.extensions.configuration.fileextensions\\6.0.0\\microsoft.extensions.configuration.fileextensions.6.0.0.nupkg.sha512",

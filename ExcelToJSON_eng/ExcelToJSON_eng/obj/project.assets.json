@@ -45,6 +45,15 @@
           "lib/net6.0/EPPlus.System.Drawing.dll": {}
         }
       },
+      "FirebirdSql.Data.FirebirdClient/10.3.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/FirebirdSql.Data.FirebirdClient.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/FirebirdSql.Data.FirebirdClient.dll": {}
+        }
+      },
       "Microsoft.Extensions.Configuration/6.0.0": {
         "type": "package",
         "dependencies": {
@@ -465,6 +474,27 @@
         "lib/netstandard2.1/EPPlus.System.Drawing.dll",
         "license.md",
         "readme.md"
+      ]
+    },
+    "FirebirdSql.Data.FirebirdClient/10.3.3": {
+      "sha512": "iAj21eY5u7obZumA3NAVZf8ynu7Z6lslkU3V4W8Mm9Mowa4gcadT2a+LIMwAovDIg8iS8RpCSzIzFdKFCdakTg==",
+      "type": "package",
+      "path": "firebirdsql.data.firebirdclient/10.3.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "firebird-logo.png",
+        "firebirdsql.data.firebirdclient.10.3.3.nupkg.sha512",
+        "firebirdsql.data.firebirdclient.nuspec",
+        "lib/net48/FirebirdSql.Data.FirebirdClient.dll",
+        "lib/net5.0/FirebirdSql.Data.FirebirdClient.dll",
+        "lib/net6.0/FirebirdSql.Data.FirebirdClient.dll",
+        "lib/net7.0/FirebirdSql.Data.FirebirdClient.dll",
+        "lib/net8.0/FirebirdSql.Data.FirebirdClient.dll",
+        "lib/netstandard2.0/FirebirdSql.Data.FirebirdClient.dll",
+        "lib/netstandard2.1/FirebirdSql.Data.FirebirdClient.dll",
+        "license.txt"
       ]
     },
     "Microsoft.Extensions.Configuration/6.0.0": {
@@ -968,6 +998,7 @@
   "projectFileDependencyGroups": {
     "net6.0-windows7.0": [
       "EPPlus >= 6.2.10",
+      "FirebirdSql.Data.FirebirdClient >= 10.3.3",
       "Newtonsoft.Json >= 13.0.3"
     ]
   },
@@ -1007,7 +1038,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net6.0-windows7.0": {
@@ -1016,6 +1048,10 @@
           "EPPlus": {
             "target": "Package",
             "version": "[6.2.10, )"
+          },
+          "FirebirdSql.Data.FirebirdClient": {
+            "target": "Package",
+            "version": "[10.3.3, )"
           },
           "Newtonsoft.Json": {
             "target": "Package",
@@ -1059,7 +1095,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.310\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.205\\RuntimeIdentifierGraph.json"
       }
     }
   }

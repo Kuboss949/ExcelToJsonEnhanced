@@ -83,3 +83,4 @@ C:\Users\jakublopata\RiderProjects\ExcelToJSON2\ExcelToJSON_eng\ExcelToJSON_eng\
 C:\Users\jakublopata\RiderProjects\ExcelToJSON2\ExcelToJSON_eng\ExcelToJSON_eng\obj\Debug\net6.0-windows\KsaweryAPP.pdb
 C:\Users\jakublopata\RiderProjects\ExcelToJSON2\ExcelToJSON_eng\ExcelToJSON_eng\obj\Debug\net6.0-windows\KsaweryAPP.genruntimeconfig.cache
 C:\Users\jakublopata\RiderProjects\ExcelToJSON2\ExcelToJSON_eng\ExcelToJSON_eng\obj\Debug\net6.0-windows\ref\KsaweryAPP.dll
+C:\Users\jakublopata\RiderProjects\ExcelToJSON2\ExcelToJSON_eng\ExcelToJSON_eng\bin\Debug\net6.0-windows\FirebirdSql.Data.FirebirdClient.dll

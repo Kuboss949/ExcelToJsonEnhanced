@@ -9,6 +9,7 @@
       "KsaweryAPP/1.0.0": {
         "dependencies": {
           "EPPlus": "6.2.10",
+          "FirebirdSql.Data.FirebirdClient": "10.3.3",
           "Newtonsoft.Json": "13.0.3"
         },
         "runtime": {
@@ -48,6 +49,14 @@
           "lib/net6.0/EPPlus.System.Drawing.dll": {
             "assemblyVersion": "6.1.1.0",
             "fileVersion": "6.1.1.0"
+          }
+        }
+      },
+      "FirebirdSql.Data.FirebirdClient/10.3.3": {
+        "runtime": {
+          "lib/net6.0/FirebirdSql.Data.FirebirdClient.dll": {
+            "assemblyVersion": "10.3.3.0",
+            "fileVersion": "10.3.3.0"
           }
         }
       },
@@ -234,6 +243,13 @@
       "sha512": "sha512-lRF5gHYrmkHOOiLMI0t6q8zNYjUrzRgAM5BCXumv5xiqXko8fx3AWI+HCNZfhEqVFGOop+42KfR5GiUcCoyoMw==",
       "path": "epplus.system.drawing/6.1.1",
       "hashPath": "epplus.system.drawing.6.1.1.nupkg.sha512"
+    },
+    "FirebirdSql.Data.FirebirdClient/10.3.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-iAj21eY5u7obZumA3NAVZf8ynu7Z6lslkU3V4W8Mm9Mowa4gcadT2a+LIMwAovDIg8iS8RpCSzIzFdKFCdakTg==",
+      "path": "firebirdsql.data.firebirdclient/10.3.3",
+      "hashPath": "firebirdsql.data.firebirdclient.10.3.3.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration/6.0.0": {
       "type": "package",

@@ -47,12 +47,18 @@
             label3 = new System.Windows.Forms.Label();
             dataOd = new System.Windows.Forms.DateTimePicker();
             detal = new System.Windows.Forms.CheckBox();
+            walutaInput = new System.Windows.Forms.TextBox();
+            label4 = new System.Windows.Forms.Label();
+            label5 = new System.Windows.Forms.Label();
+            GroupsListBox = new System.Windows.Forms.CheckedListBox();
+            label6 = new System.Windows.Forms.Label();
+            sklepy = new System.Windows.Forms.CheckBox();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(113, 88);
+            label1.Location = new System.Drawing.Point(129, 117);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(53, 20);
             label1.TabIndex = 27;
@@ -60,16 +66,16 @@
             // 
             // wierszBox
             // 
-            wierszBox.Location = new System.Drawing.Point(167, 84);
-            wierszBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            wierszBox.Location = new System.Drawing.Point(191, 112);
+            wierszBox.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             wierszBox.Name = "wierszBox";
-            wierszBox.Size = new System.Drawing.Size(114, 27);
+            wierszBox.Size = new System.Drawing.Size(130, 27);
             wierszBox.TabIndex = 26;
             // 
             // Cena
             // 
             Cena.AutoSize = true;
-            Cena.Location = new System.Drawing.Point(726, 88);
+            Cena.Location = new System.Drawing.Point(830, 117);
             Cena.Name = "Cena";
             Cena.Size = new System.Drawing.Size(42, 20);
             Cena.TabIndex = 25;
@@ -78,7 +84,7 @@
             // Ilość
             // 
             Ilość.AutoSize = true;
-            Ilość.Location = new System.Drawing.Point(504, 88);
+            Ilość.Location = new System.Drawing.Point(576, 117);
             Ilość.Name = "Ilość";
             Ilość.Size = new System.Drawing.Size(67, 20);
             Ilość.TabIndex = 24;
@@ -87,7 +93,7 @@
             // Index
             // 
             Index.AutoSize = true;
-            Index.Location = new System.Drawing.Point(304, 88);
+            Index.Location = new System.Drawing.Point(347, 117);
             Index.Name = "Index";
             Index.Size = new System.Drawing.Size(51, 20);
             Index.TabIndex = 23;
@@ -95,32 +101,32 @@
             // 
             // cenaBox
             // 
-            cenaBox.Location = new System.Drawing.Point(771, 84);
-            cenaBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            cenaBox.Location = new System.Drawing.Point(881, 112);
+            cenaBox.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             cenaBox.Name = "cenaBox";
-            cenaBox.Size = new System.Drawing.Size(114, 27);
+            cenaBox.Size = new System.Drawing.Size(130, 27);
             cenaBox.TabIndex = 22;
             // 
             // iloscBox
             // 
-            iloscBox.Location = new System.Drawing.Point(571, 84);
-            iloscBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            iloscBox.Location = new System.Drawing.Point(653, 112);
+            iloscBox.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             iloscBox.Name = "iloscBox";
-            iloscBox.Size = new System.Drawing.Size(114, 27);
+            iloscBox.Size = new System.Drawing.Size(130, 27);
             iloscBox.TabIndex = 21;
             // 
             // indexBox
             // 
-            indexBox.Location = new System.Drawing.Point(358, 84);
-            indexBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            indexBox.Location = new System.Drawing.Point(409, 112);
+            indexBox.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             indexBox.Name = "indexBox";
-            indexBox.Size = new System.Drawing.Size(114, 27);
+            indexBox.Size = new System.Drawing.Size(130, 27);
             indexBox.TabIndex = 20;
             // 
             // nazwaJSON
             // 
             nazwaJSON.AutoSize = true;
-            nazwaJSON.Location = new System.Drawing.Point(14, 135);
+            nazwaJSON.Location = new System.Drawing.Point(16, 180);
             nazwaJSON.Name = "nazwaJSON";
             nazwaJSON.Size = new System.Drawing.Size(93, 20);
             nazwaJSON.TabIndex = 19;
@@ -128,18 +134,18 @@
             // 
             // textJSON
             // 
-            textJSON.Location = new System.Drawing.Point(14, 159);
-            textJSON.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            textJSON.Location = new System.Drawing.Point(16, 212);
+            textJSON.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             textJSON.Name = "textJSON";
-            textJSON.Size = new System.Drawing.Size(114, 27);
+            textJSON.Size = new System.Drawing.Size(130, 27);
             textJSON.TabIndex = 18;
             // 
             // BtnGenerateJSON
             // 
-            BtnGenerateJSON.Location = new System.Drawing.Point(14, 197);
-            BtnGenerateJSON.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            BtnGenerateJSON.Location = new System.Drawing.Point(16, 263);
+            BtnGenerateJSON.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             BtnGenerateJSON.Name = "BtnGenerateJSON";
-            BtnGenerateJSON.Size = new System.Drawing.Size(109, 31);
+            BtnGenerateJSON.Size = new System.Drawing.Size(125, 41);
             BtnGenerateJSON.TabIndex = 17;
             BtnGenerateJSON.Text = "Generate JSON";
             BtnGenerateJSON.UseVisualStyleBackColor = true;
@@ -148,7 +154,7 @@
             // File
             // 
             File.AutoSize = true;
-            File.Location = new System.Drawing.Point(14, 20);
+            File.Location = new System.Drawing.Point(16, 27);
             File.Name = "File";
             File.Size = new System.Drawing.Size(32, 20);
             File.TabIndex = 16;
@@ -156,18 +162,18 @@
             // 
             // textFile
             // 
-            textFile.Location = new System.Drawing.Point(14, 44);
-            textFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            textFile.Location = new System.Drawing.Point(16, 59);
+            textFile.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             textFile.Name = "textFile";
-            textFile.Size = new System.Drawing.Size(871, 27);
+            textFile.Size = new System.Drawing.Size(995, 27);
             textFile.TabIndex = 15;
             // 
             // BtnSelectFile
             // 
-            BtnSelectFile.Location = new System.Drawing.Point(14, 83);
-            BtnSelectFile.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            BtnSelectFile.Location = new System.Drawing.Point(16, 111);
+            BtnSelectFile.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             BtnSelectFile.Name = "BtnSelectFile";
-            BtnSelectFile.Size = new System.Drawing.Size(86, 31);
+            BtnSelectFile.Size = new System.Drawing.Size(98, 41);
             BtnSelectFile.TabIndex = 14;
             BtnSelectFile.Text = "Select File";
             BtnSelectFile.UseVisualStyleBackColor = true;
@@ -176,15 +182,16 @@
             // dataDo
             // 
             dataDo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            dataDo.Location = new System.Drawing.Point(388, 159);
+            dataDo.Location = new System.Drawing.Point(634, 213);
+            dataDo.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             dataDo.Name = "dataDo";
-            dataDo.Size = new System.Drawing.Size(130, 27);
+            dataDo.Size = new System.Drawing.Size(148, 27);
             dataDo.TabIndex = 29;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(208, 135);
+            label2.Location = new System.Drawing.Point(429, 181);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(63, 20);
             label2.TabIndex = 30;
@@ -193,7 +200,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new System.Drawing.Point(388, 135);
+            label3.Location = new System.Drawing.Point(634, 181);
             label3.Name = "label3";
             label3.Size = new System.Drawing.Size(63, 20);
             label3.TabIndex = 31;
@@ -202,25 +209,87 @@
             // dataOd
             // 
             dataOd.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            dataOd.Location = new System.Drawing.Point(208, 159);
+            dataOd.Location = new System.Drawing.Point(429, 213);
+            dataOd.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             dataOd.Name = "dataOd";
-            dataOd.Size = new System.Drawing.Size(130, 27);
+            dataOd.Size = new System.Drawing.Size(148, 27);
             dataOd.TabIndex = 32;
             // 
             // detal
             // 
-            detal.Location = new System.Drawing.Point(555, 161);
+            detal.Location = new System.Drawing.Point(830, 213);
+            detal.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             detal.Name = "detal";
-            detal.Size = new System.Drawing.Size(104, 24);
+            detal.Size = new System.Drawing.Size(119, 32);
             detal.TabIndex = 33;
             detal.Text = "Detal";
             detal.UseVisualStyleBackColor = true;
+            // 
+            // walutaInput
+            // 
+            walutaInput.Location = new System.Drawing.Point(232, 213);
+            walutaInput.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            walutaInput.Name = "walutaInput";
+            walutaInput.Size = new System.Drawing.Size(130, 27);
+            walutaInput.TabIndex = 34;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new System.Drawing.Point(178, 217);
+            label4.Name = "label4";
+            label4.Size = new System.Drawing.Size(55, 20);
+            label4.TabIndex = 35;
+            label4.Text = "Waluta";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new System.Drawing.Point(232, 249);
+            label5.Name = "label5";
+            label5.Size = new System.Drawing.Size(152, 20);
+            label5.TabIndex = 36;
+            label5.Text = "Dla PLN zostaw puste";
+            // 
+            // GroupsListBox
+            // 
+            GroupsListBox.FormattingEnabled = true;
+            GroupsListBox.Location = new System.Drawing.Point(429, 337);
+            GroupsListBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            GroupsListBox.Name = "GroupsListBox";
+            GroupsListBox.Size = new System.Drawing.Size(402, 268);
+            GroupsListBox.TabIndex = 37;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new System.Drawing.Point(429, 313);
+            label6.Name = "label6";
+            label6.Size = new System.Drawing.Size(132, 20);
+            label6.TabIndex = 38;
+            label6.Text = "Grupa kontrahenta";
+            // 
+            // sklepy
+            // 
+            sklepy.Location = new System.Drawing.Point(830, 263);
+            sklepy.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            sklepy.Name = "sklepy";
+            sklepy.Size = new System.Drawing.Size(119, 32);
+            sklepy.TabIndex = 39;
+            sklepy.Text = "Sklepy";
+            sklepy.UseVisualStyleBackColor = true;
             // 
             // ExcelToJSONpl
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(914, 600);
+            ClientSize = new System.Drawing.Size(1043, 792);
+            Controls.Add(sklepy);
+            Controls.Add(label6);
+            Controls.Add(GroupsListBox);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(walutaInput);
             Controls.Add(detal);
             Controls.Add(dataOd);
             Controls.Add(label3);
@@ -240,11 +309,22 @@
             Controls.Add(File);
             Controls.Add(textFile);
             Controls.Add(BtnSelectFile);
-            Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             Text = "ExcelToJSONpl";
             ResumeLayout(false);
             PerformLayout();
         }
+
+        private System.Windows.Forms.CheckBox sklepy;
+
+        private System.Windows.Forms.Label label6;
+
+        private System.Windows.Forms.CheckedListBox GroupsListBox;
+
+        private System.Windows.Forms.Label label5;
+
+        private System.Windows.Forms.TextBox walutaInput;
+        private System.Windows.Forms.Label label4;
 
         private System.Windows.Forms.CheckBox detal;
 
