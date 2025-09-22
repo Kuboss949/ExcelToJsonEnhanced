@@ -17,6 +17,9 @@ namespace KsaweryAPP
         private string selectedFile;
         private const string ConfigFilePath = "config.txt";
         private FirebirdConnector _db;
+        
+        private bool detalBool;
+        private bool sklepyBool;
         public ExcelToJSONpl()
         {
             InitializeComponent();
@@ -46,23 +49,6 @@ namespace KsaweryAPP
             {
                 GroupsListBox.Items.Add(group);
             }
-        }
-
-        private string SelectedGroupsToString()
-        {
-            string result = "";
-            string positionPattern = "{{\"KodZl\": \"{0}\"}},";  // Uwaga: podwójne nawiasy klamrowe
-
-            foreach (var item in GroupsListBox.CheckedItems)
-            {
-                if (item is GrupaKontrah group)
-                {
-                    string kodZl = group.KodZl.ToString() ?? string.Empty;
-                    result += string.Format(positionPattern, EscapeJsonString(kodZl));
-                }
-            }
-
-            return result.Length > 0 ? result.TrimEnd(',') : "";
         }
         
         string EscapeJsonString(string input)
@@ -125,222 +111,206 @@ namespace KsaweryAPP
             CreateJsonFromExcel(excelFilePath, jsonOutputPath);
         }
 
-        private void CreateJsonFromExcel(string excelFilePath, string jsonOutputPath)
-{
-    // 1) Załaduj Excela
-    using (var package = new ExcelPackage(new FileInfo(excelFilePath)))
-    {
-        var worksheet = package.Workbook.Worksheets[0];
-        int rowCount = worksheet.Dimension.Rows;
-
-        // 2) Pobierz parametry z UI
-        bool detal = this.detal.Checked;
-        string waluta = this.walutaInput.Text;
-        string opis = this.textJSON.Text;
-        
-        // Parsowanie dat
-        DateTime tmp;
-        string dataOdStr = DateTime.TryParse(this.dataOd.Text, out tmp) 
-                           ? tmp.ToString("yyyy-MM-dd") 
-                           : "";
-        string dataDoStr = DateTime.TryParse(this.dataDo.Text, out tmp) 
-                           ? tmp.ToString("yyyy-MM-dd") 
-                           : "";
-
-        // 3) Lista grup kontrahentów jako List<int> (zamiast stringa "1,2,3")
-        JArray listaGrupKontrahArray = GetSelectedGroupsAsJArray();
-
-        // 5) Tworzymy JArray z wierszami „kartotek”
-        var listaKartotekArray = new JArray();
-        int colIlosc  = ConvertColumnLetterToNumber(this.iloscBox.Text);
-        int colCena   = ConvertColumnLetterToNumber(this.cenaBox.Text);
-        int colIndeks = ConvertColumnLetterToNumber(this.indexBox.Text);
-
-        for (int row = int.Parse(this.wierszBox.Text); row <= rowCount; row++)
+        private JArray GetCardsAsJArray(ExcelWorksheet worksheet)
         {
-            string odIlosci = worksheet.Cells[row, colIlosc].Text?.Trim();
-            string cenaTxt  = worksheet.Cells[row, colCena].Text?.Replace(",", ".").Trim();
-            string indeks   = worksheet.Cells[row, colIndeks].Text?.Trim();
+            string waluta = this.walutaInput.Text;
+            int rowCount = worksheet.Dimension.Rows;
+            var listaKartotekArray = new JArray();
+            int colIlosc  = ConvertColumnLetterToNumber(this.iloscBox.Text);
+            int colCena   = ConvertColumnLetterToNumber(this.cenaBox.Text);
+            int colIndeks = ConvertColumnLetterToNumber(this.indexBox.Text);
 
-            if (string.IsNullOrEmpty(odIlosci) ||
-                string.IsNullOrEmpty(cenaTxt)  ||
-                string.IsNullOrEmpty(indeks))
-                continue;
-
-            // Konwersja liczbowa
-            int    odIl = int.Parse(odIlosci);
-            decimal cena = decimal.Parse(cenaTxt, System.Globalization.CultureInfo.InvariantCulture);
-
-            // Jeden wpis kartoteki
-            var entry = new JObject(
-                new JProperty("CenaBrutto", detal ? 1 : 0),
-                new JProperty("Waluta",     waluta),
-                new JProperty("OdIlosci",   odIl),
-                new JProperty("Procent",    0),
-                new JProperty("Cena",       cena),
-                new JProperty("Indeks",     indeks)
-            );
-
-            listaKartotekArray.Add(entry);
-        }
-
-        // 6) ListaDok – pusta lub z predefiniowanymi obiektami, gdy detal==true
-        JArray listaDokArray;
-        if (!detal)
-        {
-            listaDokArray = new JArray();
-        }
-        else
-        {
-            // tylko zestaw zdefiniowanych „GrupaDok”/„Skrot”
-            var doki = new[]
+            for (int row = int.Parse(this.wierszBox.Text); row <= rowCount; row++)
             {
-                (10, "PAR"),
-                ( 80, "ZAMIN"),
-                ( 80, "ZAMINC"),
-                ( 10, "PARA"),
-                ( 10, "FVAT"),
-                ( 10, "FDETAL"),
-                ( 10, "FRA BON"),
-                ( 80, "ZAMB"),
-                ( 80, "ZAMK"),
-                ( 80, "ZAMD"),
-                ( 10, "FVATD")
-            };
+                string odIlosci = worksheet.Cells[row, colIlosc].Text?.Trim();
+                string cenaTxt  = worksheet.Cells[row, colCena].Text?.Replace(",", ".").Trim();
+                string indeks   = worksheet.Cells[row, colIndeks].Text?.Trim();
+
+                if (string.IsNullOrEmpty(odIlosci) ||
+                    string.IsNullOrEmpty(cenaTxt)  ||
+                    string.IsNullOrEmpty(indeks))
+                    continue;
+
+                // Konwersja liczbowa
+                int    odIl = int.Parse(odIlosci);
+                decimal cena = decimal.Parse(cenaTxt, System.Globalization.CultureInfo.InvariantCulture);
+
+                // Jeden wpis kartoteki
+                var entry = new JObject(
+                    new JProperty("CenaBrutto", detalBool || sklepyBool ? 1 : 0),
+                    new JProperty("Waluta",     waluta),
+                    new JProperty("OdIlosci",   odIl),
+                    new JProperty("Procent",    0),
+                    new JProperty("Cena",       cena),
+                    new JProperty("Indeks",     indeks)
+                );
+
+                listaKartotekArray.Add(entry);
+            }
+
+            return listaKartotekArray;
+        }
+
+        private JArray GetListaDokAsJArray()
+        {
+            JArray listaDokArray;
+            (int, string)[] doki;
+            if (!detalBool && !sklepyBool)
+                return new JArray();
+            
+            if (detalBool)
+            {
+                doki = new[]
+                {
+                    (10, "PAR"),
+                    (80, "ZAMIN"),
+                    (80, "ZAMINC"),
+                    (10, "PARA"),
+                    (10, "FVAT"),
+                    (10, "FDETAL"),
+                    (10, "FRA BON"),
+                    (80, "ZAMB"),
+                    (80, "ZAMK"),
+                    (80, "ZAMD"),
+                    (10, "FVATD")
+                };
+            }
+            else
+            {
+                doki = new[]
+                {
+                    (10, "FVAT"),
+                    (10, "FVATD"),
+                    (10, "FVATI"),
+                    (10, "FVATIA"),
+                    (10, "FVATIE"),
+                    (10, "FVATIER"),
+                    (10, "FVATN"),
+                    (10, "FDETAL"),
+                    (10, "PAR"),
+                    (10, "PARA"),
+                    (80, "ZAMB"),
+                    (80, "ZAMD"),
+                    (80, "ZAMIN"),
+                    (80, "ZAMINA"),
+                    (80, "ZAMINE"),
+                    (80, "ZAMINER"),
+                    (80, "ZAMK")
+                };   
+            }
             listaDokArray = new JArray(
                 doki.Select(d => 
                     new JObject(
                         new JProperty("GrupaDok", d.Item1),
                         new JProperty("Skrot",    d.Item2)
-                    )
+                        )
                 )
-            );
+                );
+            return listaDokArray;
         }
 
-        // 7) Składamy „root” JObject
-        var root = new JObject(
-            new JProperty("ZakresWylaczenGrupKontrah",     0),
-            new JProperty("SposLaczUmowyZRabat",          0),
-            new JProperty("ZakresKontrah",                0),
-            new JProperty("SposLaczPromZUmonNaCene",      2),
-            new JProperty("Typ",                          0),
-            new JProperty("ListaWylaczenKontrah", 
-                new JArray(
-                    new JObject(new JProperty("Indeks", "SAGA SP. Z O. O."))
-                )
-            ),
-            new JProperty("ListaGrupKontrah",             listaGrupKontrahArray),
-            new JProperty("ZakresKarotek",                1),
-            new JProperty("ZaleznaOd",                    0),
-            new JProperty("ListaKartotek",                listaKartotekArray),
-            new JProperty("ListaGrupKart",                new JArray()),
-            new JProperty("DataOd",                       dataOdStr),
-            new JProperty("DataDo",                       dataDoStr),
-            new JProperty("OdIlosci",                     0),
-            new JProperty("ZakresMag",                    0),
-            new JProperty("ZakresDok",                    detal ? 1 : 0),
-            new JProperty("ListaMag",                     new JArray()),
-            new JProperty("ListaDok",                     listaDokArray),
-            new JProperty("SposLaczPromZUmonNaBonif",     23),
-            new JProperty("ZakresWylaczenKontrah",        1),
-            new JProperty("ListaKontrah",                 new JArray()),
-            new JProperty("ListaCech",                    new JArray()),
-            new JProperty("ListaWylaczenGrupKontrah",     new JArray()),
-            new JProperty("Procent",                      0),
-            new JProperty("ZakresGrupKontrah",            listaGrupKontrahArray.Count > 0 ? 1 : 0),
-            new JProperty("Uwagi",                        ""),
-            new JProperty("Parametr",                     1),
-            new JProperty("Opis",                         opis),
-            new JProperty("ZakresGrupKart",               0),
-            new JProperty("UmowaDla",                     "")
-        );
-
-        // 8) Serializacja do pliku
-        System.IO.File.WriteAllText(jsonOutputPath, root.ToString(Formatting.None));
-
-        MessageBox.Show("Wyeksportowano pomyślnie!", "Eksport", MessageBoxButtons.OK, MessageBoxIcon.Information);
-    }
-}
-        
-        private void CreateJsonFromExcel1(string excelFilePath, string jsonOutputPath)
+        private JArray GetListaMagAsJArray()
         {
+            JArray listaMagArray;
+            if (!sklepyBool)
+            {
+                listaMagArray = new JArray();
+            }
+            else
+            {
+                var mag = new[]
+                {
+                    43,
+                    2,
+                    3,
+                    57,
+                    138,
+                    139,
+                    44,
+                    56
+                };
+                listaMagArray = new JArray(
+                    mag.Select(d => 
+                        new JObject(
+                            new JProperty("NrMag", d)
+                        )
+                    )
+                );
+            }
+            return listaMagArray;
+        }
+        
+        private void CreateJsonFromExcel(string excelFilePath, string jsonOutputPath)
+        {
+            // 1) Załaduj Excela
             using (var package = new ExcelPackage(new FileInfo(excelFilePath)))
             {
-                bool detal = this.detal.Checked;
-                string waluta = this.walutaInput.Text;
-                string grupyKontrah = SelectedGroupsToString();
-                string start = "{\"ZakresWylaczenGrupKontrah\":0,\"SposLaczUmowyZRabat\":0,\"ZakresKontrah\":0,\"SposLaczPromZUmonNaCene\":2,\"Typ\":0,\"ListaWylaczenKontrah\":[{\"Indeks\": \"SAGA SP. Z O. O.\"}],\"ListaGrupKontrah\":[{0}],\"ZakresKarotek\":1,\"ZaleznaOd\":0,\"ListaKartotek\":[";
-                
-                string srodekTemplate = !detal ? "{{\"CenaBrutto\":0,\"Waluta\":\"{0}\",\"OdIlosci\":{1},\"Procent\":0,\"Cena\":{2},\"Indeks\":\"{3}\"}}," : "{{\"CenaBrutto\":1,\"Waluta\":\"{0}\",\"OdIlosci\":{1},\"Procent\":0,\"Cena\":{2},\"Indeks\":\"{3}\"}},";
-                
-                const string koniec = "],\"ListaGrupKart\":[],\"DataOd\":\"{0}\",\"DataDo\":\"{1}\",\"OdIlosci\":0,\"ZakresMag\":0,\"ZakresDok\":0,\"ListaMag\":[],\"ListaDok\":[],\"SposLaczPromZUmonNaBonif\":23,\"ZakresWylaczenKontrah\":1,\"ListaKontrah\":[],\"ListaCech\":[],\"ListaWylaczenGrupKontrah\":[],\"Procent\":0,\"ZakresGrupKontrah\":0,\"Uwagi\":\"\",\"Parametr\":1,\"Opis\":\"{2}\",\"ZakresGrupKart\":0,\"UmowaDla\":\"\"}}";
-                //błąd pretiża - nie widzi dokumentów o grupach 150 oraz 220
-                //const string koniecDetal = "],\"ListaGrupKart\":[],\"DataOd\":\"{0}\",\"DataDo\":\"{1}\",\"OdIlosci\":0,\"ZakresMag\":0,\"ZakresDok\":1,\"ListaMag\":[],\"ListaDok\":[{{\"GrupaDok\": 10,\"Skrot\": \"PAR\"}},{{\"GrupaDok\": 150,\"Skrot\":\"OFEODB\"}},{{\"GrupaDok\": 150,\"Skrot\": \"OF_ZAMB\"}}, {{\"GrupaDok\": 150, \"Skrot\": \"OF_ZAMD\"}}, {{\"GrupaDok\": 150, \"Skrot\": \"OF_ZAMIN\"}}, {{\"GrupaDok\": 150, \"Skrot\": \"OF_ZAMK\"}}, {{\"GrupaDok\": 220, \"Skrot\": \"ZAOFEO\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMIN\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMINC\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"PARA\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"FVAT\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"FDETAL\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"FRA BON\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMB\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMK\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMD\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"FVATD\"}}],\"SposLaczPromZUmonNaBonif\":23,\"ZakresWylaczenKontrah\":1,\"ListaKontrah\":[],\"ListaCech\":[],\"ListaWylaczenGrupKontrah\":[],\"Procent\":0,\"ZakresGrupKontrah\":0,\"Uwagi\":\"\",\"Parametr\":1,\"Opis\":\"{2}\",\"ZakresGrupKart\":0,\"UmowaDla\":\"\"}}";
-                const string koniecDetal = "],\"ListaGrupKart\":[],\"DataOd\":\"{0}\",\"DataDo\":\"{1}\",\"OdIlosci\":0,\"ZakresMag\":0,\"ZakresDok\":1,\"ListaMag\":[],\"ListaDok\":[{{\"GrupaDok\": 10,\"Skrot\": \"PAR\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMIN\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMINC\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"PARA\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"FVAT\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"FDETAL\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"FRA BON\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMB\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMK\"}}, {{\"GrupaDok\": 80, \"Skrot\": \"ZAMD\"}}, {{\"GrupaDok\": 10, \"Skrot\": \"FVATD\"}}],\"SposLaczPromZUmonNaBonif\":23,\"ZakresWylaczenKontrah\":1,\"ListaKontrah\":[],\"ListaCech\":[],\"ListaWylaczenGrupKontrah\":[],\"Procent\":0,\"ZakresGrupKontrah\":0,\"Uwagi\":\"\",\"Parametr\":1,\"Opis\":\"{2}\",\"ZakresGrupKart\":0,\"UmowaDla\":\"\"}}";
-                string dataOdStr = "", dataDoStr = "";
-                DateTime parsedDate;
-                if (DateTime.TryParse(dataOd.Text, out parsedDate))
-                {
-                    dataOdStr = parsedDate.ToString("yyyy-MM-dd");
-                }
-                if (DateTime.TryParse(dataDo.Text, out parsedDate))
-                {
-                    dataDoStr = parsedDate.ToString("yyyy-MM-dd");
-                }
-                //var dataDoStr = dataDo.Text.Replace('.', '-');
-                string opis = textJSON.Text.ToString();
-                string stringKoniec = !detal ? string.Format(koniec, dataOdStr, dataDoStr, opis) : string.Format(koniecDetal, dataOdStr, dataDoStr, opis);
                 var worksheet = package.Workbook.Worksheets[0];
                 int rowCount = worksheet.Dimension.Rows;
 
+                // 2) Pobierz parametry z UI
+                detalBool = this.detal.Checked;
+                sklepyBool = this.sklepy.Checked;
+                string waluta = this.walutaInput.Text;
+                string opis = this.textJSON.Text;
+                
+                // Parsowanie dat
+                DateTime tmp;
+                string dataOdStr = DateTime.TryParse(this.dataOd.Text, out tmp) 
+                                   ? tmp.ToString("yyyy-MM-dd") 
+                                   : "";
+                string dataDoStr = DateTime.TryParse(this.dataDo.Text, out tmp) 
+                                   ? tmp.ToString("yyyy-MM-dd") 
+                                   : "";
+                
+                JArray listaGrupKontrahArray = GetSelectedGroupsAsJArray();
+                JArray listaKartotekArray = GetCardsAsJArray(worksheet);
+                JArray listaDokArray = GetListaDokAsJArray();
+                JArray listaMagArray = GetListaMagAsJArray();
+                
+                var root = new JObject(
+                    new JProperty("ZakresWylaczenGrupKontrah",     0),
+                    new JProperty("SposLaczUmowyZRabat",          0),
+                    new JProperty("ZakresKontrah",                0),
+                    new JProperty("SposLaczPromZUmonNaCene",      2),
+                    new JProperty("Typ",                          0),
+                    new JProperty("ListaWylaczenKontrah", 
+                        new JArray(
+                            new JObject(new JProperty("Indeks", "SAGA SP. Z O. O."))
+                        )
+                    ),
+                    new JProperty("ListaGrupKontrah",             listaGrupKontrahArray),
+                    new JProperty("ZakresKarotek",                1),
+                    new JProperty("ZaleznaOd",                    0),
+                    new JProperty("ListaKartotek",                listaKartotekArray),
+                    new JProperty("ListaGrupKart",                new JArray()),
+                    new JProperty("DataOd",                       dataOdStr),
+                    new JProperty("DataDo",                       dataDoStr),
+                    new JProperty("OdIlosci",                     0),
+                    new JProperty("ZakresMag",                    sklepyBool ? 1 : 0),
+                    new JProperty("ZakresDok",                    detalBool || sklepyBool ? 1 : 0),
+                    new JProperty("ListaMag",                     listaMagArray),
+                    new JProperty("ListaDok",                     listaDokArray),
+                    new JProperty("SposLaczPromZUmonNaBonif",     23),
+                    new JProperty("ZakresWylaczenKontrah",        1),
+                    new JProperty("ListaKontrah",                 new JArray()),
+                    new JProperty("ListaCech",                    new JArray()),
+                    new JProperty("ListaWylaczenGrupKontrah",     new JArray()),
+                    new JProperty("Procent",                      0),
+                    new JProperty("ZakresGrupKontrah",            listaGrupKontrahArray.Count > 0 ? 1 : 0),
+                    new JProperty("Uwagi",                        ""),
+                    new JProperty("Parametr",                     1),
+                    new JProperty("Opis",                         opis),
+                    new JProperty("ZakresGrupKart",               0),
+                    new JProperty("UmowaDla",                     "")
+                );
+                
+                System.IO.File.WriteAllText(jsonOutputPath, root.ToString(Formatting.None));
                 SaveToConfig(textFile.Text, indexBox.Text, iloscBox.Text, cenaBox.Text, wierszBox.Text, dataOd.Text, dataDo.Text, detal.ToString());
-
-                StringBuilder srodekBuilder = new StringBuilder();
-
-                for (int row = int.Parse(wierszBox.Text); row <= rowCount; row++)
-                {
-                    string odIlosci = worksheet.Cells[row, ConvertColumnLetterToNumber(iloscBox.Text)].Text;
-                    odIlosci = odIlosci.Replace("\r\n", "").Replace("\n", "");
-                    string cena = worksheet.Cells[row, ConvertColumnLetterToNumber(cenaBox.Text)].Text.Replace(",", ".");
-                    string indeks = worksheet.Cells[row, ConvertColumnLetterToNumber(indexBox.Text)].Text;
-
-                    if (string.IsNullOrEmpty(odIlosci) || string.IsNullOrEmpty(cena) || string.IsNullOrEmpty(indeks)) continue;
-
-                    string srodekRow = string.Format(srodekTemplate, waluta, odIlosci, cena, indeks);
-                    srodekBuilder.AppendLine(srodekRow);
-                }
-                string srodek = srodekBuilder.ToString().TrimEnd(',');
-                srodek = srodek.Substring(0, srodek.Length - 3);
-                string insertedStart = GenerateStartString(grupyKontrah);
-                string finalJson = start + Environment.NewLine + srodek + Environment.NewLine + stringKoniec;
-                System.IO.File.WriteAllText(jsonOutputPath, finalJson);
                 MessageBox.Show("Wyeksportowano pomyślnie!", "Eksport", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
-
-        private string GenerateStartString(string grupyKontrah)
-        {
-            var o = new JObject {
-                ["ZakresWylaczenGrupKontrah"] = 0,
-                ["SposLaczUmowyZRabat"]     = 0,
-                ["ZakresKontrah"]           = 0,
-                ["SposLaczPromZUmonNaCene"] = 2,
-                ["Typ"]                     = 0,
-                ["ListaWylaczenKontrah"]    = new JArray(
-                    new JObject(
-                        new JProperty("Indeks", "SAGA SP. Z O. O.")
-                    )
-                ),
-                ["ListaGrupKontrah"]        = JArray.FromObject(grupyKontrah),
-                ["ZakresKarotek"]           = 1,
-                ["ZaleznaOd"]               = 0,
-                ["ListaKartotek"]           = new JArray(/* … */)
-            };
-
-            string json = JsonConvert.SerializeObject(o, Formatting.None);
-            return json;
-        }
-
+        
         private void SaveToConfig(string textFilePath, string index, string ilosc, string cena, string wiersz, string dataOdStr, string dataDoStr, string isDetal)
         {
             string configData = $"{textFilePath}|{index}|{ilosc}|{cena}|{wiersz}|{dataOdStr}|{dataDoStr}|{isDetal}";

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KsaweryAPP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee3308f5534a7835955dc4c01e82fecd78ef220b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23d027d9b2e31a9a8fede256e51c714bcca9392a")]
 [assembly: System.Reflection.AssemblyProductAttribute("KsaweryAPP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KsaweryAPP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
